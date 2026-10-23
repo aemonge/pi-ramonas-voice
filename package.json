@@ -1,0 +1,11 @@
+{
+  "name": "pi-ramonas-voice",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Main-only Ramona voice for pi — extension injection of the authored voice asset; children stay clean.",
+  "type": "module",
+  "scripts": {
+    "test": "node test/markers.mjs",
+    "link": "bash scripts/link.sh"
+  }
+}
