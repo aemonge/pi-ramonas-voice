@@ -1,12 +1,22 @@
 {
   "name": "pi-ramonas-voice",
   "version": "0.1.0",
-  "private": true,
-  "description": "Main-only Ramona voice for pi — extension injection of the authored voice asset; children stay clean.",
+  "description": "Main-only Ramona voice for pi — settings-driven injection of the authored persona template; children stay clean.",
   "type": "module",
+  "license": "MIT",
+  "author": "aemonge <andres@aemonge.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aemonge/pi-ramonas-voice.git"
+  },
   "keywords": [
     "pi-package",
     "pi-extension"
+  ],
+  "files": [
+    "src",
+    "demos",
+    "logo.png"
   ],
   "pi": {
     "extensions": [
@@ -17,7 +27,6 @@
     "@earendil-works/pi-coding-agent": "*"
   },
   "scripts": {
-    "test": "node test/markers.mjs",
-    "link": "bash scripts/link.sh"
+    "test": "node test/markers.mjs"
   }
 }

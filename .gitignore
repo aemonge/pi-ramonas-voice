@@ -1,0 +1,6 @@
+# dependencies
+node_modules/
+
+# local agent tooling state
+.engram/
+.pi-reconcile/
