@@ -30,13 +30,13 @@ died on the absent native API.
 Conventional commit planned: `feat(settings): agent-dir settings
 loader with default fallback`
 
-- [ ] Task — add `loadSettings()`: read
+- [x] Task — add `loadSettings()`: read
       `$PI_CODING_AGENT_DIR/pi-ramonas-voice.settings.json` (default
       `~/.pi/agent/`)
-- [ ] Task — defaults in code: `agentName` `Ramona`; tiers `formal`
+- [x] Task — defaults in code: `agentName` `Ramona`; tiers `formal`
       `aemonge`, `playful` `Andy`, `flirt` `Andee`, `serious`
       `Andres`, `grave` `Andres Monge`
-- [ ] Task — missing file, missing keys, invalid JSON all resolve to
+- [x] Task — missing file, missing keys, invalid JSON all resolve to
       defaults (AC5)
 - [ ] Human validation — review the loader; confirm the settings path
       resolves outside the repo (AC6)
@@ -46,16 +46,16 @@ loader with default fallback`
 Conventional commit planned: `feat(voice): pure persona template,
 placeholders, maxed register`
 
-- [ ] Task — record the four retired sections verbatim into
+- [x] Task — record the four retired sections verbatim into
       `openspec/changes/pure-voice-settings/retired-voice-sections.md`
       (museum copy) BEFORE any deletion — the drafted sheet promised
       this record
-- [ ] Task — delete the four retired sections from `src/voice.md`
+- [x] Task — delete the four retired sections from `src/voice.md`
       (AC1)
-- [ ] Task — replace every name literal with `{{agentName}}`,
+- [x] Task — replace every name literal with `{{agentName}}`,
       `{{formal}}`, `{{playful}}`, `{{flirt}}`, `{{serious}}`,
       `{{grave}}` (AC2)
-- [ ] Task — persona register ships at maximal tolerable heat,
+- [x] Task — persona register ships at maximal tolerable heat,
       template law, serious-context exclusions intact (AC11)
 - [ ] Human validation — read the trimmed template; voice-only
       content, register at the limit you asked for
@@ -65,11 +65,11 @@ placeholders, maxed register`
 Conventional commit planned: `feat(voice): placeholder renderer with
 append-only injection`
 
-- [ ] Task — substitute placeholders from settings before appending
+- [x] Task — substitute placeholders from settings before appending
       to `appendSystemPrompt` (AC3, AC4)
-- [ ] Task — any `{{` surviving render → inject nothing that run;
+- [x] Task — any `{{` surviving render → inject nothing that run;
       unreadable template → inject nothing (AC9)
-- [ ] Task — append-only; `forceSystemPrompt` never used (AC8)
+- [x] Task — append-only; `forceSystemPrompt` never used (AC8)
 - [ ] Human validation — quick code read; guard behavior confirmed
 
 ### Slice 4 — Marker test rewrite
@@ -77,11 +77,11 @@ append-only injection`
 Conventional commit planned: `test(markers): settings-independent
 markers and render checks`
 
-- [ ] Task — markers `kaomoji`, `playfully`, `(¬‿¬)` against template
+- [x] Task — markers `kaomoji`, `playfully`, `(¬‿¬)` against template
       text only (AC10)
-- [ ] Task — placeholder-presence check: every renderer key appears;
+- [x] Task — placeholder-presence check: every renderer key appears;
       no literal default name as template text
-- [ ] Task — zero-unresolved render check with defaults (minimal
+- [x] Task — zero-unresolved render check with defaults (minimal
       substitution mirror in the test); thin-file check unchanged
 - [ ] Human validation — run `node test/markers.mjs` in your
       terminal; all green
@@ -91,9 +91,9 @@ markers and render checks`
 Conventional commit planned: `docs(readme): settings guide and
 verification steps`
 
-- [ ] Task — README: settings path, keys, defaults, broken-settings
+- [x] Task — README: settings path, keys, defaults, broken-settings
       fallback, link + restart-verify steps
-- [ ] Task — link via `scripts/link.sh` if unlinked
+- [x] Task — link via `scripts/link.sh` if unlinked
 - [ ] Human validation — run the full Human Validation Process (AC12):
       restart a main session — configured voice and register present;
       spawn a child — zero voice markers
