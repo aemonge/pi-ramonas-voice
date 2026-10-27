@@ -4,6 +4,18 @@
   "private": true,
   "description": "Main-only Ramona voice for pi — extension injection of the authored voice asset; children stay clean.",
   "type": "module",
+  "keywords": [
+    "pi-package",
+    "pi-extension"
+  ],
+  "pi": {
+    "extensions": [
+      "./src/index.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  },
   "scripts": {
     "test": "node test/markers.mjs",
     "link": "bash scripts/link.sh"

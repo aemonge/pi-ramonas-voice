@@ -12,14 +12,21 @@ sessions only, never into subagent children.
   child sessions are skipped; main sessions get the voice appended as
   a structured prompt section via `systemPromptOptions`.
 - `test/markers.mjs` — the deterministic voice-marker check.
-- `scripts/link.sh` — local install by symlink, per the established
-  `~/.pi/agent/extensions/` pattern. No npm publish.
+- `scripts/link.sh` — local install via `pi install` (pi package
+  registration). No npm publish, no `~/.pi/agent/extensions/` symlink.
 
 ## Install
 
 ```bash
-npm run link      # or: bash scripts/link.sh
+npm run link      # or: bash scripts/link.sh  — registers the package with pi
 ```
+
+Registered as a pi local package (`pi install <path>`); the
+`pi.extensions` manifest in `package.json` points pi at `src/index.ts`.
+Loaded from the project directory without copying — restart pi after
+edits. Do **not** also symlink into `~/.pi/agent/extensions/`: a second
+registration route double-loads the extension and injects the voice
+twice.
 
 ## Verify
 

@@ -1,26 +1,20 @@
 #!/usr/bin/env bash
-# Install pi-ramonas-voice locally per the established pattern:
-# a symlink in the user agent-dir extensions directory pointing at the
-# extension entry directory (index.ts + voice.md at its root).
-# No npm publish — local-only distribution.
+# Install pi-ramonas-voice as a pi package, per the pi 1.4.x package
+# mechanism: `pi install <local-path>` registers the directory in
+# ~/.pi/agent/settings.json, and the `pi.extensions` manifest in
+# package.json points pi at src/index.ts. Local packages load from the
+# resolved path without copying — edits are live on the next pi start.
+# No npm publish, no symlink into ~/.pi/agent/extensions/ (that second
+# registration route would double-load the extension and inject the
+# voice twice).
 set -euo pipefail
 
-SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/src"
-EXT_DIR="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}/extensions"
-LINK="$EXT_DIR/pi-ramonas-voice"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-mkdir -p "$EXT_DIR"
-
-if [ -L "$LINK" ] && [ "$(readlink "$LINK")" = "$SRC" ]; then
-  echo "already linked: $LINK -> $SRC"
-  exit 0
+if grep -q "pi-ramonas-voice" "${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}/settings.json" 2>/dev/null; then
+  echo "already registered in settings.json"
+else
+  pi install "$ROOT"
 fi
 
-if [ -e "$LINK" ] && [ ! -L "$LINK" ]; then
-  echo "refusing: $LINK exists and is not a symlink" >&2
-  exit 1
-fi
-
-ln -sfn "$SRC" "$LINK"
-echo "linked: $LINK -> $SRC"
 echo "verify: restart pi and run a main session; a spawned child stays clean."
