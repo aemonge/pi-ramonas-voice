@@ -1,6 +1,6 @@
 {
   "name": "pi-ramonas-voice",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Main-only Ramona voice for pi — settings-driven injection of the authored persona template; children stay clean.",
   "type": "module",
   "license": "MIT",
