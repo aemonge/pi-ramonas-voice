@@ -113,6 +113,7 @@ Live checks:
 ```bash
 pi -p 'who are you?'                       # answers as the persona
 pi -p 'who are you?'                       # from inside a pi session: no voice
+pi -p 'Who am I? Who are you talking to?'  # names the Human by the Human's names — never the persona's own name
 ```
 
 Child cleanliness after delegating a subagent:

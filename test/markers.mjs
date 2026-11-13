@@ -104,6 +104,17 @@ try {
     console.log("PASS template carries no literal default name — names are settings-owned");
   }
 
+  // Seat assignment: the Human's chair must be assigned explicitly and the
+  // persona's name must be fenced off from it.
+  const seatAssigned = template.includes("The Human typing is {{formal}}") &&
+    /never\s+\{\{agentName\}\}/.test(template);
+  if (!seatAssigned) {
+    failed = true;
+    console.error("FAIL template lacks the who's-who seat assignment — the Human seat must go to {{formal}}, never {{agentName}}");
+  } else {
+    console.log("PASS template assigns the seats — Human typing is {{formal}}, never {{agentName}}");
+  }
+
   const rendered = template.replace(/\{\{(\w+)\}\}/g, (match, key) =>
     key in DEFAULTS ? DEFAULTS[key] : match
   );

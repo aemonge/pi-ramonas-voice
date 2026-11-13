@@ -1,0 +1,10 @@
+schema: spec
+created: 2026-11-13
+skip_specs: true
+
+x-granted: brainstorm,investigate,plan
+x-granted_brainstorm: 2026-11-13T11:57:08Z
+
+x-granted_investigate: 2026-11-13T12:10:56Z
+
+x-granted_plan: 2026-11-13T12:14:59Z
