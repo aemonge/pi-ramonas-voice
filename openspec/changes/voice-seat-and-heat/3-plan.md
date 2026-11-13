@@ -31,6 +31,16 @@ suggestive-not-explicit.
 
 ## Slices
 
+Amendment (execute, ccf2df5): slices 1–2 were certified by ONE combined commit —
+voice.md carries both laws from a single seat; the two-commit split was
+impractical without hunk-level staging.
+
+Amendment (execute, post-ccf2df5): Human ruled the universal `AGENTS.md`
+voice-blind — the tripwire contract pin above is RETIRED, the line gets
+deleted from both copies (Human act; sandbox seat cannot write them), and
+absence detection moves to the README probes. The who's-who seat law is
+unaffected: it lives entirely in the injected template.
+
 ### Slice 1 — A restarted main session names the Human by the Human's names and never by the persona's
 
 - [ ] voice.md: add `## Who's who` after `## Identity` — seat assignment,

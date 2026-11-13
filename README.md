@@ -92,9 +92,9 @@ Every persona name is a setting:
   marks a child; children get nothing.
 - **Append, never replace.** The voice lands as a structured prompt
   append. It never uses `forceSystemPrompt` and never gates tools.
-- **Visible absence.** A tripwire line in the universal `AGENTS.md`
-  marks a missing delivery, so a silent failure still shows up in
-  behavior.
+- **Probe-visible absence.** The universal `AGENTS.md` is voice-blind;
+  a voice-less session fails the probes below — it cannot name the
+  persona or the Human — so a silent failure still shows up on demand.
 
 ## Verify
 
@@ -103,10 +103,10 @@ just test        # or: npm test
 ```
 
 The deterministic suite checks the thin universal `AGENTS.md` carries
-zero voice markers beyond the tripwire, the template carries every
-marker (`kaomoji`, `playfully`, `(¬‿¬)`), every renderer placeholder,
-and no literal default name — and that rendering with defaults leaves
-zero unresolved `{{ }}` tokens.
+zero voice markers — the file is voice-blind by law — the template
+carries every marker (`kaomoji`, `playfully`, `(¬‿¬)`), every renderer
+placeholder, and no literal default name — and that rendering with
+defaults leaves zero unresolved `{{ }}` tokens.
 
 Live checks:
 
