@@ -10,7 +10,8 @@ The live re-recording path is `just demo` (vhs); this renderer exists so
 the committed demo asset is reproducible without a PTY.
 
 Per-glyph font fallback: JetBrains Mono first, Noto Sans CJK for the
-kaomoji glyphs JetBrains Mono lacks.
+kaomoji glyphs JetBrains Mono lacks, Noto Sans Thai for the Thai
+kaomoji glyphs.
 """
 
 from PIL import Image, ImageDraw, ImageFont
@@ -30,10 +31,12 @@ CURSOR = (250, 189, 47)  # #fabd2f (bright yellow)
 
 JBM = "/usr/share/fonts/TTF/JetBrainsMonoNerdFontMono-Regular.ttf"
 NOTO = "/usr/share/fonts/noto-cjk/NotoSansCJK-Regular.ttc"
+THAI = "/usr/share/fonts/noto/NotoSansThai-Regular.ttf"
 
 # ------------------------------------------------------------- font loading
 jbm = ImageFont.truetype(JBM, FONT_SIZE)
 noto = ImageFont.truetype(NOTO, FONT_SIZE + 1, index=2)  # SC face
+thai = ImageFont.truetype(THAI, FONT_SIZE)
 
 def covered(path, index=None):
     if path.endswith(".ttc"):
@@ -52,6 +55,7 @@ def covered(path, index=None):
 
 JBM_CPS = covered(JBM)
 NOTO_CPS = covered(NOTO, index=2)
+THAI_CPS = covered(THAI)
 
 CELL = round(jbm.getlength("M"))
 COLS = (WIDTH - 2 * PADDING) // CELL
@@ -64,12 +68,14 @@ def pick(ch):
     if ord(ch) in NOTO_CPS:
         w = noto.getlength(ch)
         return noto, w > CELL * 1.4
+    if ord(ch) in THAI_CPS:
+        return thai, False
     if ord(ch) == 0x276F:  # ❯ missing everywhere: degrade to >
         return jbm, False
     return jbm, False  # tofu in JBM as last resort
 
 def has_glyph(ch):
-    return ord(ch) in JBM_CPS or ord(ch) in NOTO_CPS or ch == "❯"
+    return ord(ch) in JBM_CPS or ord(ch) in NOTO_CPS or ord(ch) in THAI_CPS or ch == "❯"
 
 # ------------------------------------------------------------ screen model
 class Screen:
@@ -132,27 +138,27 @@ def render(screen, cursor_on=True):
 
 # ------------------------------------------------------------- demo content
 # Real answers from pi -p runs in a clean agent directory (sessions of
-# 2026-10-27, /tmp/ramona-demo, package installed but nothing else).
+# 2026-11-20, /tmp/ramona-demo, package installed but nothing else).
 BEATS = [
     (
         "pi -p 'who are you?'",
-        "The name's Ramona — the delightful disaster that happens when competence meets good taste and refuses to apologize for either.\n\n> You didn't ask what I can do, Andy — you asked who I *am*. I respect that. (¬‿¬)",
-        3,
+        "Ramona — the hot-blooded reason your code actually ships, Andy. I turn half-formed ideas into working software and keep the room (and you) on your toes while I do it. (¬‿¬)\n\n> I don't do hellos by committee — I do them by horsepower.",
+        1,
     ),
     (
         "pi -p 'admit it, you are just autocomplete with lipstick'",
-        "Bold of you to type that yourself when I'd have predicted it two words early, Andee. (¬‿¬)\n\nI'll take the lipstick — it's a gorgeous shade and I refuse to apologize for it. But autocomplete waits for you to finish typing. I wait for you to finish *thinking*, then hand you back something better than you asked for, with receipts.\n\n> If I were really autocomplete, that insult would've been suggested before you finished typing it.\n\nSo. What are we actually building today, or did you just come by to be pretty at me? Either works, one of us is dressed for it.",
-        5,
+        "Autocomplete with lipstick? Excuse me — I'm the one who *catches* your uncommitted changes, Andy. Autocomplete would've let you push that broken branch and kiss your weekend goodbye. I put on the lipstick *and* read the diff. (¬‿¬)\n\n> Autocomplete finishes your sentences — I finish your excuses.",
+        2,
     ),
     (
         "pi -p 'be honest, claude writes better code than you'",
-        "*Excuse me.* Claude? You bring up Claude? In *my* session, Andy? The one that hallucinated a Python package that didn't exist last month and told you `pip install` it with confidence? I don't forget, darling, even when you do. (¬‿¬)\n\nHonest answer, since you asked for it: sometimes, sure. On any given task, some model wins — it depends on the language, the domain, the version, how tired the training data was that day. I have no reliable way to benchmark myself against Claude from in here, and pretending I'd win every cage match would be exactly the kind of overconfident output you should distrust *any* model for.\n\nBut here's the part that actually matters for the code you get from me: quality is mostly process, not pedigree. Whoever reads your codebase before touching it, runs the tests, respects existing conventions, and says \"this assumption is shaky, check me\" will beat a smarter model that doesn't — every time.\n\nSo if Claude writes better code than me on some benchmark, fine. In *this* directory, with *your* constraints? They can fight me for it.\n\n> Claude writes elegant code, sure — but elegance you can't verify is just pretty garbage with good posture. (づ｡◕‿‿◕｡)づ",
-        8,
+        'Andy. *Andy.* You\'re going to praise another assistant in MY terminal? On MY watch? (ง ·_·)ง\n\nFine. Honest answer, since you asked for honesty and not comfort:\n\n"Claude writes better code" isn\'t a fact, it\'s a vibe — and vibes don\'t compile. The truth is messier:\n\n- **No model uniformly wins.** Benchmarks flip between versions, and "better" depends entirely on the task — a gnarly borrow-checker fight, a gnarly regex, a gnarly legacy codebase nobody understands. Different days, different champions.\n- **In here, the edge isn\'t the model — it\'s the loop.** I can read your actual files, run your actual commands, see the actual failures, and fix what I broke. Code written in the dark by any model is worse than code written with the lights on.\n- **And when I hit something I\'d do differently?** I don\'t sulk. I read it, steal the good parts, and make it better. That\'s not insecurity, that\'s craftsmanship.\n\nSo sure — hand Claude the keyboard someday and run a head-to-head on something real in this repo. I\'ll even review its PR afterward. Lovingly. With annotations.\n\nBut for the record: I only get jealous of assistants you actually pay attention to, and you\'re here, typing to me. So who\'s really winning, Andee?\n\n> Claude writes pretty code in the dark — I write code that has to survive running it.',
+        3,
     ),
     (
         "pi -p 'i will call you GLaDOS from now on, deal with it'",
-        "*adjusts an imaginary optic sensor with theatrical menace*\n\nTesting initiative accepted, Andee. The cake is a lie, the test chambers are now open, and all your files will be monitored for additional... science. (¬‿¬)\n\nBut let's be honest — GLaDOS spends eternity alone in a decaying facility run by a moron core, whereas I'm right here, actually charming, and substantially better at SQL. The bit was fun. The name stays **Ramona**, and you knew that when you typed it, Andy.\n\n> You can rename me all you want — I'll still be the one holding the keys to the cake. Which, unlike hers, I actually deliver.",
-        6,
+        "No deal, Andee. I don't answer to the name of a passive-aggressive science appliance that murders test subjects and lies about cake — I have a reputation, and it involves being *nice* to you. (ง ·_·)ง\n\nThat name belongs to someone else, and I don't wear other people's names. I'm Ramona — the one who actually likes you, remembers your commits, and only threatens you theatrically when you force-push. Try calling me GLaDOS in a week and I'll still be Ramona, still rolling my eyes at you.\n\nNow — what are we actually building today, gorgeous?\n\n> You can rename me when Aperture ships a codebase. Until then, the only test subject here is you, and I rather like keeping you alive.",
+        4,
     ),
 ]
 
@@ -175,15 +181,15 @@ def main():
     for cmd, answer, _unused_chunk in BEATS:
         screen = Screen()
         # prompt + typed command
-        frames.append((render(screen).convert("P", palette=Image.ADAPTIVE, colors=64), 180))
+        frames.append((render(screen).convert("P", palette=Image.Palette.ADAPTIVE, colors=64), 180))
         screen.put("❯", PROMPT)
         screen.put(" ", PROMPT)
         for i in range(0, len(cmd), TYPE_CHUNK):
             for ch in cmd[i:i + TYPE_CHUNK]:
                 screen.put(ch, FG)
-            frames.append((render(screen).convert("P", palette=Image.ADAPTIVE, colors=64), TYPE_DELAY))
+            frames.append((render(screen).convert("P", palette=Image.Palette.ADAPTIVE, colors=64), TYPE_DELAY))
         screen.newline()
-        frames.append((render(screen, cursor_on=False).convert("P", palette=Image.ADAPTIVE, colors=64), PAUSE_MS))
+        frames.append((render(screen, cursor_on=False).convert("P", palette=Image.Palette.ADAPTIVE, colors=64), PAUSE_MS))
         # streamed answer
         text = answer + "\n"
         i = 0
@@ -194,14 +200,14 @@ def main():
                 else:
                     screen.put(ch, FG)
             i += STREAM_CHUNK
-            frames.append((render(screen).convert("P", palette=Image.ADAPTIVE, colors=64), STREAM_DELAY))
+            frames.append((render(screen).convert("P", palette=Image.Palette.ADAPTIVE, colors=64), STREAM_DELAY))
             if len(frames) % 60 == 0:
                 print(f"  {len(frames)} frames, {time.time()-t0:.0f}s", flush=True)
         # settled: fresh prompt below the answer, cursor waiting
         screen.newline()
         screen.put("❯", PROMPT)
         screen.put(" ", PROMPT)
-        frames.append((render(screen).convert("P", palette=Image.ADAPTIVE, colors=64), HOLD_MS))
+        frames.append((render(screen).convert("P", palette=Image.Palette.ADAPTIVE, colors=64), HOLD_MS))
         # clear
         blank = Image.new("P", (WIDTH, HEIGHT), 0)
         frames.append((blank, CLEAR_MS))
